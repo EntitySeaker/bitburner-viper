@@ -14,5 +14,5 @@ export async function main(ns) {
         commands[input].run(ns)
 
         await ns.sleep(1)
-	}
+    }
 }
