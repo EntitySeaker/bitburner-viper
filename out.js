@@ -1,4 +1,8 @@
 
+function print_help(ns, args, full_desc) {
+    ns.tprintf("Args: "+args)
+    ns.tprintf("Desc: "+full_desc)
+}
 async function user_input(input, color){
     let doc=globalThis["document"];
     let slp=ms=>new Promise(r=>setTimeout(r,ms));
@@ -42,24 +46,29 @@ class Exit {
     }
 
     run(ns, _) {
+        this.show_help(ns)
         ns.exit()
+    }
+
+    show_help(ns) {
+        print_help(ns, this.args, this.full_desc)
     }
 }
 const commands = {"exit":new Exit}
 
 export async function main(ns) {
-	while (true){
+    while (true){
 
-		var input = await user_input("Console: ", "red")
-		ns.tprintf("\u001b[31m" + "Console: " + "\u001b[32m" + input)
+        var input = await user_input("Console: ", "red")
+        ns.tprintf("\u001b[31m" + "Console: " + "\u001b[32m" + input)
 		
-		if (!(input in commands)) {
-			ns.tprintf("Command " + input + ' does not exist, type "help" for help.')
-			continue
-		}
+        if (!(input in commands)) {
+            ns.tprintf("Command " + input + ' does not exist, type "help" for help.')
+            continue
+        }
 
-		commands[input].run(ns)
+        commands[input].run(ns)
 
-		await ns.sleep(1)
-	}
+        await ns.sleep(1)
+    }
 }
