@@ -13,7 +13,7 @@ class Help {
         }
 
         if (!(args[0] in commands)){
-            ns.tprintf("Help: command "+args[0]+" not found!")
+            ns.tprintf('Help: command "'+args[0]+'" not found!')
             return
         }
 

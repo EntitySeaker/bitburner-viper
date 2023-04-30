@@ -1,4 +1,29 @@
 
+function ascii_print(ns){
+    ns.ui.clearTerminal()
+    
+    var ascii = ""
+    ascii = ascii+""
+    ascii = ascii+"##############################################################################\n"
+    ascii = ascii+"#       ...    ....     ...                                                  #\n"
+    ascii = ascii+"#      oOX0xdxO0000OkdxOK0xo                @@@@@@      @@@@@@               #\n"
+    ascii = ascii+"#     .;:.,xmMMMMMMMMMMx,.:;.              @@   @@@    @@!  @@@              #\n"
+    ascii = ascii+"#    :KXxokNMWWMMMMWWMWOoo0Xd.               .!!@!     @!@  !@!              #\n"
+    ascii = ascii+"#   ;XWXXWMMMNKWMMWXXMMMWXXWWl              !!:        !!:  !!!              #\n"
+    ascii = ascii+"#   ;XWd.lXW0lldxxxolkNWx'cXWo             :.:::::: ()  ::..::               #\n"
+    ascii = ascii+"#    lNK,   cKc     cKc  .xNx.                                               #\n"
+    ascii = ascii+"#     cXk.  ';'     ':'  oXx.       ____   ____ __                           #\n"
+    ascii = ascii+"#      cKo.  ';     ;'  :Kd.        \\   \\ /   /|__|______    ____ _______    #\n"
+    ascii = ascii+"#       :O:            'Oo.          \\   Y   / |  |\\____ \\ _/ __ \\\\_  __ \\   #\n"
+    ascii = ascii+"#        ;d,          .ol             \\     /  |  ||  |_> >\\  ___/ |  | \\/   #\n"
+    ascii = ascii+"#         ':.         ;;               \\___/   |__||   __/  \\___  >|__|      #\n"
+    ascii = ascii+"#          ..         .                            |__|         \\/           #\n"
+    ascii = ascii+"#                                                                            #\n"
+    ascii = ascii+"# Created by: Volk                                                           #\n"
+    ascii = ascii+"##############################################################################\n"
+    
+    ns.tprintf(ascii)
+}
 function print_help(ns, args, full_desc) {
     ns.tprintf("Args: "+args)
     ns.tprintf("Desc: "+full_desc)
@@ -38,6 +63,23 @@ async function user_input(input, color){
     await Promise.all([terminalPrompt(input).then(response => cmd = response)])
     return cmd
 }
+class Clear {
+    constructor() {
+        this.desc = "Clears the screen."
+        this.args = ["N/A"]
+        this.full_desc = "This command will clear the screen."
+    }
+
+    run(ns, _) {
+
+        ascii_print(ns)
+
+    }
+
+    show_help(ns) {
+        print_help(ns, this.args, this.full_desc)
+    }
+}
 class Exit {
     constructor() {
         this.desc = "Exits out of Viper."
@@ -68,7 +110,7 @@ class Help {
         }
 
         if (!(args[0] in commands)){
-            ns.tprintf("Help: command "+args[0]+" not found!")
+            ns.tprintf('Help: command "'+args[0]+'" not found!')
             return
         }
 
@@ -80,9 +122,11 @@ class Help {
         print_help(ns, this.args, this.full_desc)
     }
 }
-const commands = {"exit":new Exit, "help":new Help}
+const commands = {"exit":new Exit, "help":new Help, "clear":new Clear}
 
 export async function main(ns) {
+    ascii_print(ns)
+
     while (true){
 
         var input = await user_input("Console: ", "red")

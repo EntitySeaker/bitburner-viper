@@ -1,6 +1,8 @@
-const commands = {"exit":new Exit, "help":new Help}
+const commands = {"exit":new Exit, "help":new Help, "clear":new Clear}
 
 export async function main(ns) {
+    ascii_print(ns)
+
     while (true){
 
         var input = await user_input("Console: ", "red")
@@ -18,8 +20,6 @@ export async function main(ns) {
             ns.tprintf("Command " + command + ' does not exist, type "help" for help.')
             continue
         }
-
-        //test
 
         commands[command].run(ns, args)
 
