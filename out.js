@@ -21,12 +21,19 @@ function ascii_print(ns){
     ascii = ascii+"#                                                                            #\n"
     ascii = ascii+"# Created by: Volk                                                           #\n"
     ascii = ascii+"##############################################################################\n"
+    ascii = ascii+"\n\n"
     
     ns.tprintf(ascii)
 }
 function print_help(ns, args, full_desc) {
     ns.tprintf("Args: "+args)
     ns.tprintf("Desc: "+full_desc)
+}
+function tty(ns){
+    
+    var prompt = ns.getHostname()
+
+    return "["+prompt+"]-[terminal]: "
 }
 async function user_input(input, color){
     let doc=globalThis["document"];
@@ -71,9 +78,7 @@ class Clear {
     }
 
     run(ns, _) {
-
         ascii_print(ns)
-
     }
 
     show_help(ns) {
@@ -129,8 +134,8 @@ export async function main(ns) {
 
     while (true){
 
-        var input = await user_input("Console: ", "red")
-        ns.tprintf("\u001b[31m" + "Console: " + "\u001b[32m" + input)
+        var input = await user_input(tty(ns), "red")
+        ns.tprintf("\u001b[31m" + tty(ns) + "\u001b[32m" + input)
 
         var command = input.split(" ")[0]
 

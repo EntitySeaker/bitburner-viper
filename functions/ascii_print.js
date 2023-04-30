@@ -20,6 +20,7 @@ function ascii_print(ns){
     ascii = ascii+"#                                                                            #\n"
     ascii = ascii+"# Created by: Volk                                                           #\n"
     ascii = ascii+"##############################################################################\n"
+    ascii = ascii+"\n\n"
     
     ns.tprintf(ascii)
 }

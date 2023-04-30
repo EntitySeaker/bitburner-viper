@@ -5,8 +5,8 @@ export async function main(ns) {
 
     while (true){
 
-        var input = await user_input("Console: ", "red")
-        ns.tprintf("\u001b[31m" + "Console: " + "\u001b[32m" + input)
+        var input = await user_input(tty(ns), "red")
+        ns.tprintf("\u001b[31m" + tty(ns) + "\u001b[32m" + input)
 
         var command = input.split(" ")[0]
 

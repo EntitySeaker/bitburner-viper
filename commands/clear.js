@@ -6,9 +6,7 @@ class Clear {
     }
 
     run(ns, _) {
-
         ascii_print(ns)
-
     }
 
     show_help(ns) {
