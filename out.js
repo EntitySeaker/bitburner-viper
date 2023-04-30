@@ -46,7 +46,6 @@ class Exit {
     }
 
     run(ns, _) {
-        this.show_help(ns)
         ns.exit()
     }
 
@@ -54,20 +53,55 @@ class Exit {
         print_help(ns, this.args, this.full_desc)
     }
 }
-const commands = {"exit":new Exit}
+class Help {
+    constructor() {
+        this.desc = "Shows the help page."
+        this.args = ["(COMMAND)"]
+        this.full_desc = "This command will show the help page of Viper.\n Where (COMMAND) is the command to get more information about."
+    }
+
+    run(ns, args) {
+
+        if (!(args)){
+            ns.tprintf("Comming soon.")
+            return
+        }
+
+        if (!(args[0] in commands)){
+            ns.tprintf("Command "+args[0]+" not found!")
+            return
+        }
+
+        commands[args[0]].show_help(ns)
+
+    }
+
+    show_help(ns) {
+        print_help(ns, this.args, this.full_desc)
+    }
+}
+const commands = {"exit":new Exit, "help":new Help}
 
 export async function main(ns) {
     while (true){
 
         var input = await user_input("Console: ", "red")
         ns.tprintf("\u001b[31m" + "Console: " + "\u001b[32m" + input)
+
+		var command = input.split(" ")[0]
+
+		if (input.split(" ").length > 1) {
+			var args = input.split(" ").slice(1)
+		} else {
+			var args = null
+		}
 		
-        if (!(input in commands)) {
-            ns.tprintf("Command " + input + ' does not exist, type "help" for help.')
+        if (!(command in commands)) {
+            ns.tprintf("Command " + command + ' does not exist, type "help" for help.')
             continue
         }
 
-        commands[input].run(ns)
+        commands[command].run(ns, args)
 
         await ns.sleep(1)
     }
