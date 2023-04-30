@@ -19,6 +19,8 @@ export async function main(ns) {
             continue
         }
 
+        //test
+
         commands[command].run(ns, args)
 
         await ns.sleep(1)
