@@ -6,7 +6,6 @@ class Exit {
     }
 
     run(ns, _) {
-        this.show_help(ns)
         ns.exit()
     }
 
